@@ -1,0 +1,22 @@
+version: "3"
+
+# This docker-compose config hosts a netboot.xyz server, which points to disk images in the cloud.
+
+services:
+  netbootxyz:
+    image: linuxserver/netbootxyz:latest
+    container_name: netbootxyz
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./config:/config
+      - ./assets:/assets
+    ports:
+      # Web configuration interface. Put this behind your firewall!
+      - 3000:3000
+      # TFTP
+      - 69:69/udp
+      # Nginx server for hosting assets
+      - 8080:80
+    restart: unless-stopped
