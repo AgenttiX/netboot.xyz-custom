@@ -1,0 +1,21 @@
+#!ipxe
+###
+### Custom menu for netboot.xyz
+###
+
+clear custom_choice
+menu Test menu
+item --gap Utilities
+item hello_world ${space} Hello World
+choose custom_choice || goto custom_exit
+echo ${cls}
+goto ${custom_choice}
+goto custom_exit
+
+:hello_world
+echo Hello world!
+sleep 10
+goto custom_exit
+
+:custom_exit
+exit 0
