@@ -19,4 +19,17 @@ services:
       - 69:69/udp
       # Nginx server for hosting assets
       - 8080:80
+    labels:
+      - "com.centurylinklabs.watchtower.scope=netbootxyz"
+    restart: unless-stopped
+  watchtower:
+    container_name: netbootxyz_watchtower
+    image: containrrr/watchtower:latest
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    # Run once a week on Sunday at 04:30
+    command: --cleanup --schedule "0 30 4 * * 0" --scope netbootxyz
+    labels:
+      - "com.centurylinklabs.watchtower.scope=netbootxyz"
     restart: unless-stopped
